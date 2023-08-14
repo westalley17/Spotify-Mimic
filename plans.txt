@@ -1,0 +1,13 @@
+1. Create an account (check for uniqueness).
+2. Login to account (using a process similar to program 3 from 1310)
+3. Once logged in, display menu of options to choose from that include: (include their name and welcome them to the Spotify Mimic)
+    - Print entire song list so that the user can choose which songs to add to their own playlist.
+    - Enter their playlist (Spotify uses a library with multiple playlist opportunities, but for the sake of simplicity we will only have one playlist).
+        - Once in the playlist, they will have a queue of songs ready for them in the default ordering of the playlist (simply the order that they added them in, just like Spotify works).
+        - In this option, the user will be allowed to change the ordering of the queue by manually selecting songs from THEIR playlist to jump the line.
+          (just... like... Spotify... get it yet?)
+        - They will finally need an option to return to the main menu.
+    - Save their playlist to a unique text file only for that user.
+    - Saving this playlist here will be the "default" queue until the playlist gets changed.
+    - Exit the application.
+    
