@@ -18,7 +18,7 @@ int main()
 
         currentUser = accessAccount(currentUser, username, userAccountData);
 
-        accessInnerFunctions(currentUser);
+        accessInnerFunctions(currentUser); // calls the bulk of the program
 
         readFromMap(userAccountData); // this function prints out all current user data to the text file and deletes the heaped data inside the map.
     }

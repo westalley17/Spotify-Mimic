@@ -12,4 +12,3 @@
     - Exit the application.
 
 Figure out the shuffling technique!
-    

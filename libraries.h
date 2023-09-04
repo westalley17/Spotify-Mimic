@@ -1,8 +1,6 @@
 #ifndef LIBRARIES_H
 #define LIBRARIES_H
 
-// here lies all the shit needed to give me a headache...
-
 #include <iostream>
 
 struct Song

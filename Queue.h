@@ -1,5 +1,7 @@
 #include "libraries.h"
 
+// give an overview of this class
+
 class Queue
 {
 private:

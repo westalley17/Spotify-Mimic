@@ -1,5 +1,7 @@
 #include "libraries.h"
 
+// give a more descriptive overview of this class
+
 class User
 {
 private:
