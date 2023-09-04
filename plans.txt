@@ -10,4 +10,6 @@
     - Save their playlist to a unique text file only for that user.
     - Saving this playlist here will be the "default" queue until the playlist gets changed.
     - Exit the application.
+
+Figure out the shuffling technique!
     

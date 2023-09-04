@@ -97,6 +97,7 @@ User *createAccount(std::map<std::string, User *> &userAccountData, std::string 
                       << "New Username: ";
             std::cin >> new_username;
         }
+        // comments added here
         std::cout << "\nNew Password: ";
         std::cin >> password;
         password = sha256(password);
