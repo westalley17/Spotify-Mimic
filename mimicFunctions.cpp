@@ -14,19 +14,19 @@ void readIntoMap(std::ifstream& userInFile, Database& userAccountData)
         if (libraryInFile.good())
         {
             newUser->queue = new Queue(); // reserves space in memory to place the default queue for the specific newUser's existing playlist.
-            Song *tempSong = new Song;
+            Song tempSong;
             int librarySize;
             std::string buffer;
             libraryInFile >> librarySize;
             libraryInFile.ignore();
             for (int i = 0; i < librarySize; i++)
             {
-                std::getline(libraryInFile, tempSong->songName);
-                std::getline(libraryInFile, tempSong->artist);
+                std::getline(libraryInFile, tempSong.songName);
+                std::getline(libraryInFile, tempSong.artist);
                 std::getline(libraryInFile, buffer);
-                tempSong->minutes = stoi(buffer);
-                newUser->addSongToLibrary(tempSong);
-                newUser->queue->addSongToDefaultQueue(tempSong);
+                tempSong.minutes = stoi(buffer);
+                newUser->addSongToLibrary(&tempSong);
+                newUser->queue->addSongToDefaultQueue(&tempSong);
             }
         }
 
@@ -342,6 +342,6 @@ void validateIntegerInput(int& input, int highParam, int lowParam)
         std::cin.clear();
         std::cin.ignore(100, '\n');
         std::cout << "You must input a valid song choice:\n"
-                  << "Song number: ";
+                  << "Choice: ";
     }
 }

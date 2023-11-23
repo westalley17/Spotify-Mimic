@@ -17,7 +17,7 @@ struct Song
 #include "Queue.h"
 #include "User.h"
 
-using Database = std::unordered_map<const std::string &, User *>;
+using Database = std::unordered_map<std::string, User *>;
 
 // function prototypes
 void readIntoMap(std::ifstream &, Database &);

@@ -94,24 +94,28 @@ class User
             return currCapacity;
         }
 
-        const Song** getLibrary() const
+        Song** getLibrary() const
         {
             return library;
         }
 
-        void addSongToLibrary(Song*& newSong)
+        void addSongToLibrary(Song* newSong)
         {
+            Song* copySong = new Song;
+            copySong->artist = newSong->artist;
+            copySong->minutes = newSong->minutes;
+            copySong->songName = newSong->songName;
             if (!library) // for the edge case of the first song being added to the User's playlist.
             {
                 library = new Song*[libCapacity];
-                library[currCapacity] = newSong;
+                library[currCapacity] = copySong;
                 currCapacity++;
             }
             else
             {
                 if (currCapacity == libCapacity)
                     resizeLibrary();
-                library[currCapacity] = newSong;
+                library[currCapacity] = copySong;
                 currCapacity++;
             }
         }
