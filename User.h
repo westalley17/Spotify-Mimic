@@ -7,19 +7,19 @@ class User
 private:
     std::string username, password;
     Song *library;       // will be used to dynamically allocate an array of Songs later on.
-    int libCapacity = 1; // this starts the size of the library at 1 so that the user can keep doubling the array size until they have added all the songs that they want.
-    int currCapacity = 0;
+    int libCapacity; // this starts the size of the library at 1 so that the user can keep doubling the array size until they have added all the songs that they want.
+    int currCapacity;
 
         void quicksort(Song*& library, int low, int high)
         {
             int lowEndIndex;
 
-        if (low >= high) // base case
-            return;
-        lowEndIndex = partition(library, low, high);
-        quicksort(library, low, lowEndIndex);
-        quicksort(library, lowEndIndex + 1, high);
-    }
+            if (low >= high) // base case
+                return;
+            lowEndIndex = partition(library, low, high);
+            quicksort(library, low, lowEndIndex);
+            quicksort(library, lowEndIndex + 1, high);
+        }
 
         int partition(Song* library, int left, int right)
         {
@@ -54,12 +54,15 @@ private:
         }
 
 public:
-    Queue *queue = NULL;
+    Queue *queue;
 
     User(std::string user, std::string pass)
     {
         username = user;
         password = pass;
+        libCapacity = 1;
+        currCapacity = 0;
+        queue = NULL;
         library = NULL;
     }
 
