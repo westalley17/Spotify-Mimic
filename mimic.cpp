@@ -6,7 +6,6 @@ int main()
     std::ifstream inFile("accounts.txt");
     if (inFile.is_open())
     {
-        std::string username = "";
         std::map<std::string, User *> userAccountData; // uses the username as the KEY and the pointer to the User object as the VALUE.
         User *currentUser = NULL;
         readIntoMap(inFile, userAccountData); // takes the accounts file and makes Users to place into userAccountData-- our map.
@@ -16,7 +15,7 @@ int main()
                   << std::setw(76) << "WELCOME TO THE SPOTIFY MIMIC!\n"
                   << std::setw(78) << std::string('#', 30) << std::endl;
 
-        currentUser = accessAccount(currentUser, username, userAccountData);
+        currentUser = accessAccount(currentUser, "", userAccountData);
 
         accessInnerFunctions(currentUser); // calls the bulk of the program
 

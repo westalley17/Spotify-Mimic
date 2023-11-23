@@ -2,7 +2,7 @@
 
 // make more descriptive comments
 
-void readIntoMap(std::ifstream &userInFile, std::map<std::string, User *> &userAccountData)
+void readIntoMap(std::ifstream& userInFile, std::map<std::string, User *>& userAccountData)
 {
     std::string username, password;
     User *newUser;
@@ -38,7 +38,7 @@ void readIntoMap(std::ifstream &userInFile, std::map<std::string, User *> &userA
 
 // reads from the map and prints out the user data into files.
 
-void readFromMap(std::map<std::string, User *> &userAccountData)
+void readFromMap(std::map<std::string, User *>& userAccountData)
 {
     std::map<std::string, User *>::iterator it;
     int i;
@@ -62,7 +62,7 @@ void readFromMap(std::map<std::string, User *> &userAccountData)
 
 // this function keeps the main function clean from cluttering mess like this do-while loop.
 
-User *accessAccount(User *currentUser, std::string username, std::map<std::string, User *> &userAccountData)
+User *accessAccount(User*& currentUser, const std::string& username, std::map<std::string, User *>& userAccountData)
 {
     int accountChoice;
     do
@@ -84,7 +84,7 @@ User *accessAccount(User *currentUser, std::string username, std::map<std::strin
 
 // creates accounts based off of availability.
 
-User *createAccount(std::map<std::string, User *> &userAccountData, std::string old_username)
+User *createAccount(std::map<std::string, User *>& userAccountData, const std::string& old_username)
 {
     std::string password;
 
@@ -123,7 +123,7 @@ User *createAccount(std::map<std::string, User *> &userAccountData, std::string 
     }
 }
 
-User *loginToExistingAccount(std::map<std::string, User *> &userAccountData)
+User *loginToExistingAccount(std::map<std::string, User *>& userAccountData)
 {
     std::string username, password;
     char creationChoice;
@@ -168,7 +168,7 @@ User *loginToExistingAccount(std::map<std::string, User *> &userAccountData)
     return NULL; // this will more than likely never get reached, but it is here as a failsafe.
 }
 
-void accessInnerFunctions(User *currentUser)
+void accessInnerFunctions(User*& currentUser)
 {
     char exitAppChoice;
     do
@@ -196,7 +196,7 @@ void accessInnerFunctions(User *currentUser)
     } while (tolower(exitAppChoice) == 'n');
 }
 
-void accessMimicFunctions(User *currentUser)
+void accessMimicFunctions(User*& currentUser)
 {
     int menuChoice, numSongs, addChoice;
     std::string songChoice;
@@ -263,7 +263,7 @@ void accessMimicFunctions(User *currentUser)
 
 // reads songs from a text file and stores them into a temporary array that the user can use to select which songs they would like to add to their playlist.
 
-void readSongsIntoLibrary(User *currentUser)
+void readSongsIntoLibrary(User*& currentUser)
 {
     int songListSize, songChoice, songLength;
     std::string buffer;
