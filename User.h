@@ -6,11 +6,11 @@ class User
 {
     private:
         std::string username, password;
-        Song* library;       // will be used to dynamically allocate an array of Songs later on.
+        Song** library;       // will be used to dynamically allocate an array of Songs later on.
         int libCapacity; // this starts the size of the library at 1 so that the user can keep doubling the array size until they have added all the songs that they want.
         int currCapacity;
 
-        void quicksort(Song*& library, int low, int high)
+        void quicksort(Song**& library, int low, int high)
         {
             int lowEndIndex;
 
@@ -21,21 +21,21 @@ class User
             quicksort(library, lowEndIndex + 1, high);
         }
 
-        int partition(Song* library, int left, int right)
+        int partition(Song**& library, int left, int right)
         {
             int mid, pivot;
-            Song temp;
+            Song* temp;
             mid = left + (right - left) / 2;
-            pivot = library[mid].minutes;
+            pivot = library[mid]->minutes;
 
             bool done = false;
             while (!done)
             {
-                while (library[left].minutes < pivot)
+                while (library[left]->minutes < pivot)
                 {
                     left += 1;
                 }
-                while (pivot < library[right].minutes)
+                while (pivot < library[right]->minutes)
                 {
                     right -= 1;
                 }
@@ -68,6 +68,8 @@ class User
 
         ~User()
         {
+            for(int i = 0; i < currCapacity; i++)
+                delete library[i];
             delete [] library;
             delete queue;
         }
@@ -82,7 +84,7 @@ class User
             return password;
         }
 
-        const Song getLibrarySong(int index) const
+        Song* getLibrarySong(int index) const
         {
             return library[index];
         }
@@ -92,16 +94,16 @@ class User
             return currCapacity;
         }
 
-        const Song* getLibrary() const
+        const Song** getLibrary() const
         {
             return library;
         }
 
-        void addSongToLibrary(Song newSong)
+        void addSongToLibrary(Song*& newSong)
         {
             if (!library) // for the edge case of the first song being added to the User's playlist.
             {
-                library = new Song[libCapacity];
+                library = new Song*[libCapacity];
                 library[currCapacity] = newSong;
                 currCapacity++;
             }
@@ -117,7 +119,7 @@ class User
         void resizeLibrary()
         {
             libCapacity *= 2;
-            Song *largerLib = new Song[libCapacity];
+            Song** largerLib = new Song*[libCapacity];
             for (int i = 0; i < currCapacity; i++)
                 largerLib[i] = library[i];
             delete[] library; // deletes the smaller array.
@@ -127,14 +129,14 @@ class User
         void printLibrary()
         {
             for (int i = 0; i < currCapacity; i++)
-                std::cout << i + 1 << ". " << library[i].songName << std::endl;
+                std::cout << i + 1 << ". " << library[i]->songName << std::endl;
         }
 
-        bool duplicateSong(Song bufferSong)
+        bool duplicateSong(Song* bufferSong)
         {
             for (int i = 0; i < currCapacity; i++)
             {
-                if (bufferSong.songName == library[i].songName)
+                if (bufferSong->songName == library[i]->songName)
                     return true;
             }
             return false;
