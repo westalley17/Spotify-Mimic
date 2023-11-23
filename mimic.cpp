@@ -7,7 +7,7 @@ int main()
     if (inFile.is_open())
     {
         std::string username = "";
-        std::map<std::string, User *> userAccountData; // uses the username as the KEY and the pointer to the User object as the VALUE.
+        Database userAccountData; // uses the username as the KEY and the pointer to the User object as the VALUE.
         User *currentUser = NULL;
         readIntoMap(inFile, userAccountData); // takes the accounts file and makes Users to place into userAccountData-- our map.
 

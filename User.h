@@ -63,10 +63,10 @@ public:
         library = NULL;
     }
 
-        ~User()
-        {
-            delete [] library;
-            delete queue;
+    ~User()
+    {
+        delete [] library;
+        delete queue;
     }
 
     std::string getUserName()
@@ -79,63 +79,63 @@ public:
         return password;
     }
 
-        const Song getLibrarySong(int index) const
-        {
-            return library[index];
-        }
+    Song getLibrarySong(int index) const
+    {
+        return library[index];
+    }
 
     int getLibrarySize()
     {
         return currCapacity;
     }
 
-        const Song* getLibrary() const
-        {
-            return library;
-        }
+    Song* getLibrary() const
+    {
+        return library;
+    }
 
-        void addSongToLibrary(Song newSong)
+    void addSongToLibrary(Song newSong)
+    {
+        if (!library) // for the edge case of the first song being added to the User's playlist.
         {
-            if (!library) // for the edge case of the first song being added to the User's playlist.
-            {
-                library = new Song[libCapacity];
-                library[currCapacity] = newSong;
-                currCapacity++;
-            }
-            else
-            {
-                if (currCapacity == libCapacity)
-                    resizeLibrary();
-                library[currCapacity] = newSong;
-                currCapacity++;
-            }
+            library = new Song[libCapacity];
+            library[currCapacity] = newSong;
+            currCapacity++;
         }
+        else
+        {
+            if (currCapacity == libCapacity)
+                resizeLibrary();
+            library[currCapacity] = newSong;
+            currCapacity++;
+        }
+    }
 
-        void resizeLibrary()
-        {
-            libCapacity *= 2;
-            Song *largerLib = new Song[libCapacity];
-            for (int i = 0; i < currCapacity; i++)
-                largerLib[i] = library[i];
-            delete[] library; // deletes the smaller array.
-            library = largerLib;
-        }
+    void resizeLibrary()
+    {
+        libCapacity *= 2;
+        Song *largerLib = new Song[libCapacity];
+        for (int i = 0; i < currCapacity; i++)
+            largerLib[i] = library[i];
+        delete[] library; // deletes the smaller array.
+        library = largerLib;
+    }
 
-        void printLibrary()
-        {
-            for (int i = 0; i < currCapacity; i++)
-                std::cout << i + 1 << ". " << library[i].songName << std::endl;
-        }
+    void printLibrary()
+    {
+        for (int i = 0; i < currCapacity; i++)
+            std::cout << i + 1 << ". " << library[i].songName << std::endl;
+    }
 
-        bool duplicateSong(Song bufferSong)
+    bool duplicateSong(Song bufferSong)
+    {
+        for (int i = 0; i < currCapacity; i++)
         {
-            for (int i = 0; i < currCapacity; i++)
-            {
-                if (bufferSong.songName == library[i].songName)
-                    return true;
-            }
-            return false;
+            if (bufferSong.songName == library[i].songName)
+                return true;
         }
+        return false;
+    }
 
     void shuffleLibrary()
     {

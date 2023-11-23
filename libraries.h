@@ -20,11 +20,11 @@ struct Song
 using Database = std::unordered_map<std::string, User *>;
 
 // function prototypes
-void readIntoMap(std::ifstream &, std::map<std::string, User *> &);
-void readFromMap(std::map<std::string, User *> &);
-User *accessAccount(User *, std::string, std::map<std::string, User *> &);
-User *createAccount(std::map<std::string, User *> &, std::string);
-User *loginToExistingAccount(std::map<std::string, User *> &);
+void readIntoMap(std::ifstream &, Database &);
+void readFromMap(Database &);
+User *accessAccount(User *, std::string, Database &);
+User *createAccount(Database &, std::string);
+User *loginToExistingAccount(Database &);
 void accessInnerFunctions(User *);
 void accessMimicFunctions(User *);
 void readSongsIntoLibrary(User *);

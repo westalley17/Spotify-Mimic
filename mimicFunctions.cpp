@@ -2,7 +2,7 @@
 
 // make more descriptive comments
 
-void readIntoMap(std::ifstream &userInFile, std::map<std::string, User *> &userAccountData)
+void readIntoMap(std::ifstream &userInFile, Database &userAccountData)
 {
     std::string username, password;
     User *newUser;
@@ -25,8 +25,8 @@ void readIntoMap(std::ifstream &userInFile, std::map<std::string, User *> &userA
                 std::getline(libraryInFile, tempSong.artist);
                 std::getline(libraryInFile, buffer);
                 tempSong.minutes = stoi(buffer);
-                newUser->addSongToLibrary(&tempSong);
-                newUser->queue->addSongToDefaultQueue(&tempSong);
+                newUser->addSongToLibrary(tempSong);
+                newUser->queue->addSongToDefaultQueue(tempSong);
             }
         }
 
@@ -38,7 +38,7 @@ void readIntoMap(std::ifstream &userInFile, std::map<std::string, User *> &userA
 
 // reads from the map and prints out the user data into files.
 
-void readFromMap(std::map<std::string, User *> &userAccountData)
+void readFromMap(Database &userAccountData)
 {
     Database::iterator it;
     int i;
@@ -52,9 +52,9 @@ void readFromMap(std::map<std::string, User *> &userAccountData)
         libraryOutFile << it->second->getLibrarySize() << std::endl;
         for (i = 0; i < it->second->getLibrarySize(); i++)
         {
-            libraryOutFile << it->second->getLibrarySong(i)->songName << std::endl;
-            libraryOutFile << it->second->getLibrarySong(i)->artist << std::endl;
-            libraryOutFile << it->second->getLibrarySong(i)->minutes << std::endl;
+            libraryOutFile << it->second->getLibrarySong(i).songName << std::endl;
+            libraryOutFile << it->second->getLibrarySong(i).artist << std::endl;
+            libraryOutFile << it->second->getLibrarySong(i).minutes << std::endl;
         }
         delete it->second; // removes all dynamically allocated memory.
     }
@@ -62,7 +62,7 @@ void readFromMap(std::map<std::string, User *> &userAccountData)
 
 // this function keeps the main function clean from cluttering mess like this do-while loop.
 
-User *accessAccount(User *currentUser, std::string username, std::map<std::string, User *> &userAccountData)
+User *accessAccount(User *currentUser, std::string username, Database &userAccountData)
 {
     int accountChoice;
     do
@@ -84,7 +84,7 @@ User *accessAccount(User *currentUser, std::string username, std::map<std::strin
 
 // creates accounts based off of availability.
 
-User *createAccount(std::map<std::string, User *> &userAccountData, std::string old_username)
+User *createAccount(Database &userAccountData, std::string old_username)
 {
     std::string password;
 
@@ -123,7 +123,7 @@ User *createAccount(std::map<std::string, User *> &userAccountData, std::string 
     }
 }
 
-User *loginToExistingAccount(std::map<std::string, User *> &userAccountData)
+User *loginToExistingAccount(Database &userAccountData)
 {
     std::string username, password;
     char creationChoice;
@@ -268,28 +268,27 @@ void readSongsIntoLibrary(User *currentUser)
     int songListSize, songChoice, songLength;
     std::string buffer;
     char userChoice;
-    Song **bufferArray; // temporary array to hold ALL songs that the user can then choose from.
+    Song *bufferArray; // temporary array to hold ALL songs that the user can then choose from.
     std::ifstream inFile("songs.txt");
     if (inFile.is_open())
     {
         inFile >> songListSize;
         inFile.ignore();
-        bufferArray = new Song*[songListSize];
+        bufferArray = new Song[songListSize];
 
         for (int i = 0; i < songListSize; i++)
         {
-            bufferArray[i] = new Song;
             std::getline(inFile, buffer);
-            bufferArray[i]->songName = buffer;
+            bufferArray[i].songName = buffer;
             std::getline(inFile, buffer);
-            bufferArray[i]->artist = buffer;
+            bufferArray[i].artist = buffer;
             std::getline(inFile, buffer);
             songLength = stoi(buffer);
-            bufferArray[i]->minutes = songLength;
+            bufferArray[i].minutes = songLength;
         }
         std::cout << std::endl;
         for (int i = 0; i < songListSize; i++)
-            std::cout << i + 1 << ". " << bufferArray[i]->songName << std::endl;
+            std::cout << i + 1 << ". " << bufferArray[i].songName << std::endl;
 
         do
         {
@@ -314,9 +313,7 @@ void readSongsIntoLibrary(User *currentUser)
             validateAnswerInput(userChoice);
 
         } while (tolower(userChoice) == 'y');
-        
-        for(int i = 0; i < songListSize; i++)
-            delete bufferArray[i];
+
         delete[] bufferArray; // cleans up our temporary mess.
     }
 
@@ -324,7 +321,7 @@ void readSongsIntoLibrary(User *currentUser)
         std::cout << "A fatal error has occurred when trying to load songs from \"songs.txt\"" << std::endl;
 }
 
-void validateAnswerInput(char& userChoice)
+void validateAnswerInput(char &userChoice)
 {
     while (!(std::cin >> userChoice) || (tolower(userChoice) != 'y' && tolower(userChoice) != 'n')) // restrains the user from screwing up my hard work.
     {
@@ -335,7 +332,7 @@ void validateAnswerInput(char& userChoice)
     }
 }
 
-void validateIntegerInput(int& input, int highParam, int lowParam)
+void validateIntegerInput(int &input, int highParam, int lowParam)
 {
     while (!(std::cin >> input) || input > highParam || input < lowParam) // restrains the user from screwing up my hard work.
     {

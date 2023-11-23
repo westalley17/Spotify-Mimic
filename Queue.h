@@ -7,7 +7,7 @@
         private:
             struct Node
             {
-                Song* song;
+                Song song;
                 Node *next;
             };
             Node *head;
@@ -31,7 +31,7 @@
                 }
             }
 
-            void addSongToDefaultQueue(Song* newSong)
+            void addSongToDefaultQueue(Song newSong)
             {
                 Node *newNode = new Node;
                 newNode->song = newSong;
@@ -46,9 +46,9 @@
                 else
                 {
                     char dupChoice;
-                    if (validateSongChoice(newSong->songName))
+                    if (validateSongChoice(newSong.songName))
                     {
-                        std::cout << std::endl << newSong->songName << " is already in your queue. Would you still like to add it to the queue? (y or n)\n"
+                        std::cout << std::endl << newSong.songName << " is already in your queue. Would you still like to add it to the queue? (y or n)\n"
                                 << "Choice: ";
                         while (!(std::cin >> dupChoice) || (tolower(dupChoice) != 'y' && tolower(dupChoice) != 'n')) // restrains the user from screwing up my hard work.
                         {
@@ -65,7 +65,7 @@
                 }
             }
 
-            void addSongToManualQueue(Song* newSong)
+            void addSongToManualQueue(Song newSong)
             {
                 Node *newNode = new Node;
                 newNode->song = newSong;
@@ -79,9 +79,9 @@
                 else
                 {
                     char dupChoice;
-                    if (validateSongChoice(newSong->songName))
+                    if (validateSongChoice(newSong.songName))
                     {
-                        std::cout << std::endl << newSong->songName << " is already in your queue. Would you still like to add it to the queue? (y or n)\n"
+                        std::cout << std::endl << newSong.songName << " is already in your queue. Would you still like to add it to the queue? (y or n)\n"
                                 << "Choice: ";
                         while (!(std::cin >> dupChoice) || (tolower(dupChoice) != 'y' && tolower(dupChoice) != 'n')) // restrains the user from screwing up my hard work.
                         {
@@ -106,8 +106,7 @@
                 {
                     Node *tempPtr = head;
                     head = head->next;
-                    std::cout << "Now playing " << tempPtr->song->songName << " by " << tempPtr->song->artist << " for " << tempPtr->song->minutes << " minutes!\n";
-                    delete tempPtr->song;
+                    std::cout << "Now playing " << tempPtr->song.songName << " by " << tempPtr->song.artist << " for " << tempPtr->song.minutes << " minutes!\n";
                     delete tempPtr;
                 }
             }
@@ -120,13 +119,13 @@
                     {
 
                         Node *temp = head;
-                        if (temp->song->songName == unwantedSong) // if the first song is the unwanted song.
+                        if (temp->song.songName == unwantedSong) // if the first song is the unwanted song.
                         {
                             head = head->next;
                             delete temp;
                             return;
                         }
-                        while (temp->next && temp->next->song->songName != unwantedSong)
+                        while (temp->next && temp->next->song.songName != unwantedSong)
                             temp = temp->next;
                         Node *delNode = temp->next;
                         temp->next = temp->next->next;
@@ -134,7 +133,7 @@
                     }
                     else // only one song in queue.
                     {
-                        std::cout << "\nDeleted " << head->song->songName << " from the queue.\n";
+                        std::cout << "\nDeleted " << head->song.songName << " from the queue.\n";
                         delete head;
                         head = NULL;
                     }
@@ -151,7 +150,7 @@
                 Node *temp = head;
                 while (temp)
                 {
-                    std::cout << "--> " << temp->song->songName << std::endl;
+                    std::cout << "--> " << temp->song.songName << std::endl;
                     temp = temp->next;
                 }
                 return 1;
@@ -170,7 +169,7 @@
                 Node *tempPtr = head;
                 while (tempPtr)
                 {
-                    if (tempPtr->song->songName == songChoice)
+                    if (tempPtr->song.songName == songChoice)
                         return true;
                     tempPtr = tempPtr->next;
                 }
