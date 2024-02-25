@@ -1,7 +1,5 @@
 #include "libraries.h"
 
-// make more descriptive comments
-
 void readIntoMap(std::ifstream &userInFile, Database &userAccountData)
 {
     std::string username, password;
